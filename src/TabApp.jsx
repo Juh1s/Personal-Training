@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -13,8 +13,8 @@ function TabApp() {
   };
   
   return (
-      <div>
-          <Header/>
+      <div >
+          <Header />
           <Tabs value={value} onChange={handleChange}>
               <Tab value="one" label="CUSTOMER" />
               <Tab value="two" label="TRAINING" />

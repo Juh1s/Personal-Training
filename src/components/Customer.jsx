@@ -5,7 +5,6 @@ import AddTraining from './AddTraining';
 import EditCustomer from './EditCustomer';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 
 import "ag-grid-community/styles/ag-grid.css";
@@ -21,6 +20,7 @@ export default function Customer() {
     
     const gridRef = useRef();
 
+    // Fetches customer data
     const fetchCustomers = () => {
         fetch("https://traineeapp.azurewebsites.net/api/customers")
         .then(response => {
@@ -31,6 +31,8 @@ export default function Customer() {
         })
         .then(data => setCustomers(data.content) )
     };
+    
+    // Deletes target customer, asks for confirmation
     const deleteCustomer = (url) => {
         if (window.confirm("Are you sure?"))
             fetch(url, {method: 'DELETE'})
@@ -47,9 +49,9 @@ export default function Customer() {
     }
 
     const [columnDefs] = useState([
-        { cellRenderer: params => <EditCustomer fetchCustomers={fetchCustomers} data={params.data}/>},
-        { cellRenderer: params => <Button size="small" onClick={() => deleteCustomer(params.data.links[0].href)}>Delete</Button>},
-        { cellRenderer: params => <AddTraining fetchCustomers={fetchCustomers} data={params.data}/>},
+        { cellRenderer: params => <EditCustomer fetchCustomers={fetchCustomers} data={params.data}/>, width: 100},
+        { cellRenderer: params => <Button size="small" onClick={() => deleteCustomer(params.data.links[0].href)}>Delete</Button>, width: 120},
+        { cellRenderer: params => <AddTraining fetchCustomers={fetchCustomers} data={params.data}/>, width: 170},
         { field: 'firstname', sortable: true, filter: true, floatingFilter: true},
         { field: 'lastname', sortable: true, filter: true, floatingFilter: true},
         { field: 'streetaddress', sortable: true, filter: true, floatingFilter: true},
@@ -59,6 +61,8 @@ export default function Customer() {
         { field: 'phone', sortable: true, filter: true, floatingFilter: true}
       ]);
 
+    // Checks to see if there are any customers before letting the grid be seen
+    if(customers.length > 1){
     return(
     <Container maxWidth={false} disableGutters>
       <AddCustomer fetchCustomers={fetchCustomers} justifyContent={"right"} />
@@ -77,4 +81,7 @@ export default function Customer() {
       </Stack>
     </Container>
     );
+    } else {
+    return(<AddCustomer fetchCustomers={fetchCustomers} justifyContent={"right"} />);
+    }
 }

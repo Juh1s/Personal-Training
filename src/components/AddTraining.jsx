@@ -5,6 +5,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 export default function AddTraining({ fetchCustomers, data }) {
   const [training, setTraining] = useState({
@@ -47,14 +51,15 @@ export default function AddTraining({ fetchCustomers, data }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New training</DialogTitle>
         <DialogContent>
-          <TextField
-            margin="dense"
-            label="Date"
-            fullWidth
-            variant="standard"
-            value={training.date}
-            onChange={e => setTraining({...training, date: e.target.value})}
-          />
+          
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DatePicker']}>
+            <DatePicker
+              label="Date"
+              onChange={e => setTraining({...training, date: e})}
+            />
+          </DemoContainer>
+        </LocalizationProvider>
           <TextField
             margin="dense"
             label="Activity"
