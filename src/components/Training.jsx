@@ -1,3 +1,3 @@
-export default function Training() {
-    return(<h1>Welcome to Training tab</h1>);
+export default function Customer() {
+    return(<h1>Welcome to my app</h1>);
 }

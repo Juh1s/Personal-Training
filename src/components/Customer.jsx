@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef  } from 'react';
 import { AgGridReact } from 'ag-grid-react';
+import AddCustomer from './AddCustomer';
+import EditCustomer from './EditCustomer';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -10,9 +12,7 @@ import "ag-grid-community/styles/ag-theme-material.css";
 
 export default function Customer() {
 
-    const [customer, setCustomer] = useState({
-
-    });
+    const [customer, setCustomer] = useState({});
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
@@ -47,7 +47,8 @@ export default function Customer() {
     }
 
     const [columnDefs] = useState([
-        { cellRenderer: params => <Button size="small" onClick={() => deleteCustomer(params.data.links[0].href)}>Delete</Button>, width: 120},
+        { cellRenderer: params => <EditCustomer fetchCustomers={fetchCustomers} data={params.data}/>},
+        { cellRenderer: params => <Button size="small" onClick={() => deleteCustomer(params.data.links[0].href)}>Delete</Button>},
         { field: 'firstname', sortable: true, filter: true, floatingFilter: true},
         { field: 'lastname', sortable: true, filter: true, floatingFilter: true},
         { field: 'streetaddress', sortable: true, filter: true, floatingFilter: true},
@@ -57,10 +58,9 @@ export default function Customer() {
         { field: 'phone', sortable: true, filter: true, floatingFilter: true}
       ]);
 
-
-
     return(
     <Container maxWidth={false} disableGutters>
+      <AddCustomer fetchCustomers={fetchCustomers} justifyContent={"right"} />
       <Stack alignItems={"center"} justifyContent={"center"}>
         <div role='table' className='ag-theme-material' style={{ width: 1000, height: 500}} >
           <AgGridReact
