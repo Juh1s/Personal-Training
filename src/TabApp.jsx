@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Customer from './components/Customer';
 import Training from './components/Training';
+import Header from './components/Header';
 
 function TabApp() {
   const [value, setValue] = useState('one');
@@ -13,6 +14,7 @@ function TabApp() {
   
   return (
       <div>
+          <Header/>
           <Tabs value={value} onChange={handleChange}>
               <Tab value="one" label="CUSTOMER" />
               <Tab value="two" label="TRAINING" />
