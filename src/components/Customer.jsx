@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef  } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import AddCustomer from './AddCustomer';
+import AddTraining from './AddTraining';
 import EditCustomer from './EditCustomer';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -12,7 +13,6 @@ import "ag-grid-community/styles/ag-theme-material.css";
 
 export default function Customer() {
 
-    const [customer, setCustomer] = useState({});
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
@@ -49,6 +49,7 @@ export default function Customer() {
     const [columnDefs] = useState([
         { cellRenderer: params => <EditCustomer fetchCustomers={fetchCustomers} data={params.data}/>},
         { cellRenderer: params => <Button size="small" onClick={() => deleteCustomer(params.data.links[0].href)}>Delete</Button>},
+        { cellRenderer: params => <AddTraining fetchCustomers={fetchCustomers} data={params.data}/>},
         { field: 'firstname', sortable: true, filter: true, floatingFilter: true},
         { field: 'lastname', sortable: true, filter: true, floatingFilter: true},
         { field: 'streetaddress', sortable: true, filter: true, floatingFilter: true},
